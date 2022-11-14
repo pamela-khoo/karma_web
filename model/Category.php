@@ -1,5 +1,6 @@
 <?php
-require_once ('../karma_db/DBController.php'); 
+require_once ('../karma_web/DBController.php'); 
+
 
 class Category {
     private $db_handle;

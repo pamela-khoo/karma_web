@@ -13,13 +13,13 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Edit Category</h1>
+              <h1>Edit User</h1>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Category</a></li>
-                <li class="breadcrumb-item active">Edit Category</li>
+                <li class="breadcrumb-item"><a href="#">User</a></li>
+                <li class="breadcrumb-item active">Edit User</li>
               </ol>
             </div>
           </div>
@@ -35,30 +35,49 @@
               <!-- general form elements -->
               <div class="card card-primary">
                 <!-- form start -->
-                <form name="frmAdd" method="POST" action="" id="frmAdd" onSubmit="return validate();">
+                <form name="frmAdd" method="POST" action="" id="frmAdd" onSubmit="">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <div class="form-group">
-                        <label for="event_name" class="required_label">Category Name</label>
-                            <input class="form-control demoInputBox" required="" name="name" type="text" id="name" value="<?php echo $result[0]["name"]; ?>">
+                        <label for="first_name" class="required_label">First Name</label>
+                            <input class="form-control demoInputBox" required="" name="first_name" type="text" id="first_name" value="<?php echo $result[0]["first_name"]; ?>">
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="last_name" class="required_label">Last Name</label>
+                            <input class="form-control demoInputBox" required="" name="last_name" type="text" id="last_name" value="<?php echo $result[0]["last_name"]; ?>">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="status" class="required_label">Status</label>
                             <select class="form-control" required="" id="status" name="status"><option value="1">Active</option><option value="0">Inactive</option></select>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="email" class="required_label">Email Address</label>
+                            <input class="form-control demoInputBox" required="" name="email" type="text" id="email" value="<?php echo $result[0]["email"]; ?>">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="points">Points</label>
+                        <input class="form-control" autocomplete="off" step="5" min="0" name="points" type="number" required=""
+                        value="<?php echo $result[0]["points"]; ?>">
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <input type="submit" class="btn btn-primary" name="add_cat" id="btnSubmit" value="Submit">
+                  <input type="submit" class="btn btn-primary" name="edit_user" id="btnSubmit" value="Submit">
                   <?php
-                    if (isset($_POST['add_cat'])){  ?> 
+                    if (isset($_POST['edit_user'])){  ?> 
                       <script type="text/javascript">
-                        window.location = "index.php?action=category-view";
+                        window.location = "index.php?action=user-view";
                       </script>     
                   <?php
                     }
@@ -90,24 +109,5 @@ $(function () {
 });
 </script>
 
-<script>
-function validate() {
-    var valid = true;   
-    $(".demoInputBox").css('background-color','');
-    $(".info").html('');
-    
-    if(!$("#name").val()) {
-        $("#name-info").html("(required)");
-        $("#name").css('background-color','#FFFFDF');
-        valid = false;
-    }
-    if(!$("#status").val()) {
-        $("#status").html("(required)");
-        $("#status").css('background-color','#FFFFDF');
-        valid = false;
-    }
-    return valid;
-}
-</script>
 </body>
 </html>

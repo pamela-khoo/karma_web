@@ -1,5 +1,5 @@
 <?php
-require_once ('../karma_db/DBController.php'); 
+require_once ('../karma_web/DBController.php'); 
 
 class Event {
     private $db_handle;

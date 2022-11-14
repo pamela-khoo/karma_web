@@ -3,6 +3,7 @@ require_once ("model/Category.php");
 require_once ("model/Event.php");
 require_once ("model/Mission.php");
 require_once ("model/Organization.php");
+require_once ("model/User.php");
 
 $action = "";
 
@@ -10,6 +11,69 @@ if (! empty($_GET["action"])) {
     $action = $_GET["action"];
 }
 switch ($action) {
+    /**
+     * User
+     * 
+     **/
+    case "user-login":
+       if(isset($_POST['login'])){  
+           $email = $_POST['email'];  
+           $password = $_POST['password'];  
+            
+           $user = new User();  
+           $result = $user->loginAdmin($email, $password);  
+           
+           if ($result) {  
+               // Login Success  
+               echo "<script>alert('Success')</script>";  
+               header("location:index.php?action=home");  
+ 
+           } else {  
+               // Login Failed  
+               echo "<script>alert('Invalid Login Credentials')</script>";  
+           }  
+       }  
+       require_once "view/login.php";
+       break;
+
+    case "user-view":
+        $user = new User();
+        $result = $user->getUser();
+        require_once "view/user_view.php";
+        break;
+
+    case "user-edit":
+        $user_id = $_GET["id"];
+        $user = new User();
+        
+        if (isset($_POST['edit_user'])) {
+            $first_name = $_POST['first_name'];
+            $last_name = $_POST['last_name'];
+            $email = $_POST['email'];
+            $status = $_POST['status'];
+            $points = $_POST['points'];
+            
+            $user->editUser($first_name, $last_name, $status, $email, $points, $user_id);
+            echo '<script>alert("Recorded Edited Succesfully");</script>';
+            
+            print($first_name);
+        }
+        
+        $result = $user->getUserById($user_id);
+        
+        require_once "view/user_edit.php";
+        break;
+
+    case "user-delete":
+        $user_id = $_GET["id"];
+        $user = new User();
+        
+        $user->deleteUser($user_id);
+        
+        $result = $user->getUser();
+        require_once "view/user_view.php";
+        break;
+
     /**
      * Category
      * 
@@ -149,6 +213,10 @@ switch ($action) {
         require_once "view/event_view.php";
         break;
 
+    /**
+     * Mission
+     * 
+     * ***/
     case "mission-view":
         $id = $_GET["id"]; 
         $mission = new Mission();       
@@ -227,7 +295,9 @@ switch ($action) {
         break;
 
     default:
-        require_once "view/dashboard.php";
+        $event = new Event();
+        $result = $event->getEvent();
+        require_once "view/event_view.php";
         break;
 }
 

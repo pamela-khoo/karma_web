@@ -1,7 +1,3 @@
-<?php 
-require_once ('../karma_db/DBController.php'); 
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +50,7 @@ require_once ('../karma_db/DBController.php');
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Contact No.</th>
+                    <th>Number of Participants</th>
                     <th>Status</th>
                   </tr>
                   </thead>
@@ -66,7 +62,7 @@ require_once ('../karma_db/DBController.php');
                           echo "<td> {$result[$k]['id']} </td>";
                           echo "<td> {$result[$k]['name']} </td>";
                           echo "<td> {$result[$k]['email']} </td>";
-                          echo "<td> {$result[$k]['contact_no']} </td>";
+                          echo "<td> {$result[$k]['participant_no']} </td>";
                           echo "<td>";
                         
                           if($result[$k]['status'] == 1){

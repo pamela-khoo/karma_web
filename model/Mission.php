@@ -1,5 +1,5 @@
 <?php
-require_once ('../karma_db/DBController.php'); 
+require_once ('../karma_web/DBController.php'); 
 
 class Mission {
     private $db_handle;
@@ -9,7 +9,7 @@ class Mission {
     }
 
     function getMissionById($id) {
-        $query = "SELECT u.id AS id, CONCAT(CONCAT(first_name,' '),last_name) AS name, email, contact_no, m.status AS status, e.id AS event_id, e.name AS event_name
+        $query = "SELECT u.id AS id, CONCAT(CONCAT(first_name,' '),last_name) AS name, email, participant_no, m.status AS status, e.id AS event_id, e.name AS event_name
                     FROM mission m JOIN user u ON m.user_id = u.id JOIN events e ON m.event_id = e.id WHERE e.id = ?";
         $paramType = "i";
         $paramValue = array(

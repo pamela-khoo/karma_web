@@ -1,8 +1,3 @@
-<?php 
-session_start();
-require ('../karma_db/dbcontroller.php'); 
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,12 +16,12 @@ require ('../karma_db/dbcontroller.php');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Manage Category</h1>
+            <h1>Manage Users</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Category</li>
+              <li class="breadcrumb-item active">Users</li>
             </ol>
           </div>
         </div>
@@ -40,7 +35,7 @@ require ('../karma_db/dbcontroller.php');
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Category Table</h3>
+                <h3 class="card-title">User Table</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive">
@@ -49,24 +44,40 @@ require ('../karma_db/dbcontroller.php');
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Email</th>
+                    <th>Points</th>
                     <th>Status</th>
                     <th>Options</th>
                   </tr>
                   </thead>
                   <tbody>
                     <?php
-                    // Query to read data
-                      $q = mysqli_query($conn, "SELECT * FROM category") or die(mysqli_error($conn));
+                    if (! empty($result)) {
+                        foreach ($result as $k => $v) {
+                          echo "<tr>";
+                          echo "<td> {$result[$k]['id']} </td>";
+                          echo "<td> {$result[$k]['name']} </td>";
+                          echo "<td> {$result[$k]['email']} </td>";
+                          echo "<td> {$result[$k]['points']} </td>";
 
-                      while ($row = mysqli_fetch_array($q)) {
-                        echo "<tr>";
-                        echo "<td> {$row['id']} </td>";
-                        echo "<td> {$row['name']} </td>";
-                        echo "<td> {$row['status']} </td>";
-                        echo "<td>Edit</td>";
-                        echo "</tr>";
+                          if ($result[$k]['status'] == 1) {
+                            echo "<td> <i class='fas fa-check text-success'></i> </td>";
+                          } else {
+                            echo "<td> <i class='fas fa-times text-red'></i> </td>";
+                          }
+
+                          ?>
+                          <td>
+                            <a class="btnEditAction" href="index.php?action=user-edit&id=<?php echo $result[$k]["id"]; ?>">
+                            <i class="fa fa-edit fa-fw" aria-hidden="true"></i></a>
+                            <a class="btnDeleteAction" onclick='confirmDel("index.php?action=user-delete&id=<?php echo $result[$k]["id"]; ?>" )'>
+                            <i class="fa fa-trash fa-fw" aria-hidden="true"></i></a>
+                          </td>
+                    <?php
+                        }
                       }
                     ?>
+                            
                 </table>
               </div>
               <!-- /.card-body -->
@@ -97,6 +108,19 @@ require ('../karma_db/dbcontroller.php');
 <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
+<!-- TODO: For organization side-->
+<!-- Page specific script -->
+<!-- <script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, 
+      "lengthChange": false, 
+      "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+  });
+</script> -->
+
 <!-- Page specific script -->
 <script>
   $(function () {
@@ -107,12 +131,13 @@ require ('../karma_db/dbcontroller.php');
       "ordering": false
     });
   });
-</script>
 
-<?php
-//Close connection with server
-mysqli_close($conn);
-?>
+  function confirmDel(url) {
+    if (confirm("Delete record?")) {
+      window.location.replace(url);
+    };
+  }
+</script>
 
 </body>
 </html>
