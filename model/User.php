@@ -52,12 +52,11 @@ class User {
         return $result;
     }
     
-    //TODO:
-    function editUser($first_name, $last_name, $status, $email, $points, $user_id) {
-        $query = "UPDATE user SET first_name = ?, last_name = ?, status = ?, email = ?, points = ? WHERE id = ?";
-        $paramType = "ssisii";
+    function editUser($first_name, $last_name, $status, $email, $points, $role, $user_id) {
+        $query = "UPDATE user SET first_name = ?, last_name = ?, status = ?, email = ?, points = ?, role = ? WHERE id = ?";
+        $paramType = "ssisiii";
         $paramValue = array(
-            $first_name, $last_name, $status, $email, $points, $user_id
+            $first_name, $last_name, $status, $email, $points, $role, $user_id
         );
         $this->db_handle->update($query, $paramType, $paramValue);
     }  

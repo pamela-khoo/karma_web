@@ -69,6 +69,12 @@
                         value="<?php echo $result[0]["points"]; ?>">
                       </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="role" class="required_label">Role</label>
+                            <select class="form-control" required="" id="role" name="role"><option value="1">Normal User</option><option value="2">Organizer</option></select>
+                        </div>
+                    </div>
                   </div>
                 </div>
                 <!-- /.card-body -->

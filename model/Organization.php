@@ -25,28 +25,32 @@ class Organization {
         return $result;
     }
 
-    function addOrganization($org_name,$status,$description,$logo_url) {
-        $query = "INSERT INTO organization (org_name, status, description, logo_url) VALUES (?, ?, ?, ?)";
-        $paramType = "siss";
+    function addOrganization($org_name,$status,$description,$logo_url,$org_url,$user_id) {
+        $query = "INSERT INTO organization (org_name, status, description, logo_url, org_url, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+        $paramType = "sisssi";
         $paramValue = array(
             $org_name,
             $status,
             $description,
             $logo_url,
+            $org_url,
+            $user_id,
         );
         
         $insertId = $this->db_handle->insert($query, $paramType, $paramValue);
         return $insertId;
     }
     
-    function editOrganization($org_name,$status,$description,$logo_url,$id) {
-        $query = "UPDATE organization SET org_name = ?,status = ?, description = ?, logo_url = ? WHERE id = ?";
-        $paramType = "sissi";
+    function editOrganization($org_name,$status,$description,$logo_url,$org_url,$user_id,$id) {
+        $query = "UPDATE organization SET org_name = ?,status = ?, description = ?, logo_url = ?, org_url = ?, user_id = ? WHERE id = ?";
+        $paramType = "sisssii";
         $paramValue = array(
             $org_name,
             $status,
             $description,
             $logo_url,
+            $org_url,
+            $user_id,
             $id
         );
         

@@ -14,6 +14,12 @@ class Event {
         return $result;
     }
 
+    function getSelectedEvent($user_id) {
+        $sql = "SELECT * FROM events e JOIN organization o ON e.organization = o.id WHERE o.user_id =?";
+        $result = $this->db_handle->runBaseQuery($sql);
+        return $result;
+    }
+
     function getEventById($id) {
         $query = "SELECT * FROM events WHERE id = ?";
         $paramType = "i";

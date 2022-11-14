@@ -52,11 +52,10 @@ switch ($action) {
             $email = $_POST['email'];
             $status = $_POST['status'];
             $points = $_POST['points'];
+            $role = $_POST['role'];
             
-            $user->editUser($first_name, $last_name, $status, $email, $points, $user_id);
+            $user->editUser($first_name, $last_name, $status, $email, $points, $role, $user_id);
             echo '<script>alert("Recorded Edited Succesfully");</script>';
-            
-            print($first_name);
         }
         
         $result = $user->getUserById($user_id);
@@ -250,10 +249,11 @@ switch ($action) {
             $status = $_POST['status'];
             $description = $_POST['description'];
             $logo_url = $_POST['logo_url'];
-
+            $org_url = $_POST['org_url'];
+            $user_id = $_POST['user_id'];
             
             $organization = new Organization();
-            $insertId = $organization->addOrganization($org_name, $status, $description, $logo_url);
+            $insertId = $organization->addOrganization($org_name, $status, $description, $logo_url, $org_url, $user_id);
             if (empty($insertId)) {
                 $response = array(
                     "message" => "Problem in Adding New Record",
@@ -275,8 +275,10 @@ switch ($action) {
             $status = $_POST['status'];
             $description = $_POST['description'];
             $logo_url = $_POST['logo_url'];
+            $org_url = $_POST['org_url'];
+            $user_id = $_POST['user_id'];
 
-            $organization->editOrganization($name, $status, $description, $logo_url, $id);
+            $organization->editOrganization($name, $status, $description, $logo_url, $org_url, $user_id, $id);
             echo '<script>alert("Recorded Edited Succesfully");</script>';
         }
         

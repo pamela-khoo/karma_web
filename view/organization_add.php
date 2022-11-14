@@ -57,7 +57,28 @@
                     <div class="form-group">
                       <label for="banner">Logo Image</label>
                       <input class="form-control file-input" accept="image/*" name="logo_url" type="file" required="">
-
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="org_url">Organization URL</label>
+                      <input class="form-control" required="" name="org_url" type="url" placeholder="https://example.com">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="user_id">Organizer Account</label>
+                      <select class="form-control" id="user_id" name="user_id">
+                        <option disabled selected value> Select Organizer </option>
+                        <?php
+                        $sql = "SELECT * FROM user";
+                        $conn = mysqli_connect('localhost', 'root', '', 'karma_db');
+                        $res = mysqli_query($conn, $sql);
+                        while ($row = mysqli_fetch_assoc($res)) {
+                          echo "<option value='$row[id]'>$row[email]</option>";
+                        }
+                        ?>
+                      </select>
                     </div>
                   </div>
                   <div class="col-md-12">
