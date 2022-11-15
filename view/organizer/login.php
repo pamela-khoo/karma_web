@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="row justify-content-center p-3">
-                        <p>Login as <a href="index.php?action=org-login"> Organizer</a></p>
+                        <p>Login as <a href="index.php?action=admin-login"> Administrator</a></p>
                     </div>
                 </form>
             </div>

@@ -72,5 +72,20 @@ class Organization {
         }
     }
 
+     /**
+     * Organization-side  
+     * 
+     * ***/  
+    function getOrganizerOrganization($user_id) {
+        $query = "SELECT * FROM organization WHERE user_id = ? ";
+        $paramType = "i";
+        $paramValue = array(
+            $user_id
+        );
+        
+        $result = $this->db_handle->runQuery($query, $paramType, $paramValue);
+        return $result;
+    }
+
 }
 ?>

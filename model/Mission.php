@@ -34,5 +34,19 @@ class Mission {
         header('location:index.php?action=mission-view&id='.$event_id);
     } 
 
+    function updateMissionStatusOrg($status, $event_id, $id) {
+        $query = "UPDATE mission SET status= ? WHERE event_id= ? AND user_id= ?";
+
+        $paramType = "iii";
+        $paramValue = array(
+            $status,
+            $event_id,
+            $id,
+        );
+        
+        $this->db_handle->update($query, $paramType, $paramValue);
+        header('location:index.php?action=org-mission-view&id='.$event_id);
+    } 
+
 }
 ?>

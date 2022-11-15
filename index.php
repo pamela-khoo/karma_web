@@ -15,7 +15,7 @@ switch ($action) {
      * User
      * 
      **/
-    case "user-login":
+    case "admin-login":
        if(isset($_POST['login'])){  
            $email = $_POST['email'];  
            $password = $_POST['password'];  
@@ -270,7 +270,7 @@ switch ($action) {
         $id = $_GET["id"];
         $organization = new Organization();
         
-        if (isset($_POST['add_org'])) {
+        if (isset($_POST['add_org'] )) {
             $name = $_POST['org_name'];
             $status = $_POST['status'];
             $description = $_POST['description'];
@@ -294,6 +294,169 @@ switch ($action) {
         
         $result = $organization->getOrganization();
         require_once "view/organization_view.php";
+        break;
+
+
+    /**
+     * Organization-side  
+     * 
+     * ***/  
+
+    // Login
+    case "org-login":
+        if(isset($_POST['login'])){  
+            $email = $_POST['email'];  
+            $password = $_POST['password'];  
+                
+            $user = new User();  
+            $result = $user->loginOrg($email, $password);  
+            
+            if ($result) {  
+                // Login Success  
+                echo "<script>alert('Success')</script>";  
+                header("location:index.php?action=org-user-view");  
+    
+            } else {  
+                // Login Failed  
+                echo "<script>alert('Invalid Login Credentials')</script>";  
+            }  
+        }  
+        require_once "view/organizer/login.php";
+        break;
+
+    // Event
+    case "org-event-view":
+        $id = $_GET["id"];
+        $event = new Event();
+        $result = $event->getOrganizerEvent($id);
+        require_once "view/organizer/event_view.php";
+        break;
+
+    case "org-event-add":
+        if (isset($_POST['add_event_o'])) {
+            $name = $_POST['name'];
+            $start_date = $_POST['start_date'];
+            $end_date = $_POST['end_date'];
+            $start_time = $_POST['start_time'];
+            $end_time = $_POST['end_time'];
+            $description = $_POST['description'];
+            $status = $_POST['status'];
+            $venue = $_POST['venue'];
+            $category = $_POST['category'];
+            $organization = $_POST['organization'];
+            $points = $_POST['points'];
+            $image_url = $_POST['image_url'];
+            $limit_registration = $_POST['limit_registration'];
+            
+            $event = new Event();
+            $insertId = $event->addEvent($name,$start_date,$end_date,$start_time,$end_time,$description,
+                        $status,$venue,$category,$organization,$points,$image_url,$limit_registration);
+            if (empty($insertId)) {
+                $response = array(
+                    "message" => "Problem in Adding New Record",
+                    "type" => "error"
+                );
+                
+                echo '<script>alert("Problem in Adding New Record");</script>';
+
+            } 
+            echo '<script>alert("Recorded Added Succesfully");</script>';
+        }
+
+        require_once "view/organizer/event_add.php";
+        break;
+
+    case "org-event-edit":
+        $id = $_GET["id"];
+        $event = new Event();
+        
+        if (isset($_POST['add_event_o'])) {
+            $name = $_POST['name'];
+            $start_date = $_POST['start_date'];
+            $end_date = $_POST['end_date'];
+            $start_time = $_POST['start_time'];
+            $end_time = $_POST['end_time'];
+            $description = $_POST['description'];
+            $status = $_POST['status'];
+            $venue = $_POST['venue'];
+            $category = $_POST['category'];
+            $organization = $_POST['organization'];
+            $points = $_POST['points'];
+            $image_url = $_POST['image_url'];
+            $limit_registration = $_POST['limit_registration'];
+            
+            $event->editEvent($name,$start_date,$end_date,$start_time,$end_time,$description,
+                                $status,$venue,$category,$organization,$points,$image_url,$limit_registration,$id);
+            echo '<script>alert("Recorded Edited Succesfully");</script>';
+        }
+        
+        $result = $event->getEventById($id);
+        
+        require_once "view/organizer/event_edit.php";
+        break;
+
+    case "org-event-delete":
+        $event_id = $_GET["id"];
+        $user_id = $_GET["uid"];
+        $event = new Event();
+        
+        $event->deleteEvent($event_id);
+        
+        $result = $event->getOrganizerEvent($user_id);
+        require_once "view/organizer/event_view.php";
+        break;
+    
+    // Mission
+    case "org-mission-view":
+        $id = $_GET["id"]; 
+        $mission = new Mission();       
+        $result = $mission->getMissionById($id);
+        
+        require_once "view/organizer/mission_view.php";
+        break;
+
+    case "org-update-status":
+        $status = $_GET['status'];
+        $eid = $_GET['event_id'];
+        $uid = $_GET['id'];
+
+        $mission = new Mission();  
+        $result = $mission->updateMissionStatusOrg($status, $eid, $uid);
+        break;
+
+    // Organization
+    case "org-org-view":
+        $id = $_GET["id"];
+        $organization = new Organization();
+        $result = $organization->getOrganizerOrganization($id);
+        require_once "view/organizer/organization_view.php";
+        break;
+
+    case "org-org-edit":
+        $id = $_GET["id"];
+        $organization = new Organization();
+        
+        if (isset($_POST['add_org_o'])) {
+            $name = $_POST['org_name'];
+            $status = $_POST['status'];
+            $description = $_POST['description'];
+            $logo_url = $_POST['logo_url'];
+            $org_url = $_POST['org_url'];
+            $user_id = $_POST['user_id'];
+
+            $organization->editOrganization($name, $status, $description, $logo_url, $org_url, $user_id, $id);
+            echo '<script>alert("Recorded Edited Succesfully");</script>';
+        }
+        
+        $result = $organization->getOrganizationById($id);
+        require_once "view/organizer/organization_edit.php";
+        break;
+
+    // Volunteer
+    case "org-user-view":
+        $user = new User();
+        $result = $user->getVolunteer();
+        require_once "view/organizer/user_view.php";
         break;
 
     default:

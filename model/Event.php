@@ -96,5 +96,21 @@ class Event {
         }
     }
 
+    /**
+     * Organization-side  
+     * 
+     * ***/  
+    function getOrganizerEvent($user_id) {
+        $query = "SELECT e.id, name, start_date, end_date, start_time, end_time, venue, e.status FROM events e
+                    JOIN organization o ON e.organization = o.id WHERE o.user_id = ?";
+        $paramType = "i";
+        $paramValue = array(
+            $user_id
+        );
+        
+        $result = $this->db_handle->runQuery($query, $paramType, $paramValue);
+        return $result;
+    }
+
 }
 ?>

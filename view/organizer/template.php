@@ -1,7 +1,7 @@
 <?php
 // If no session variable exists, redirect the user:
 if (!isset($_SESSION['uid'])) {
-	 header("Location:index.php?action=admin-login");
+	 header("Location:index.php?action=org-login");
 } 
 ?>
 
@@ -98,7 +98,7 @@ if (!isset($_SESSION['uid'])) {
       
          <!-- Nav Item 3 -->
          <li class="nav-item ">
-            <a href="index.php?action=event-view" class="nav-link">
+            <a href="index.php?action=org-event-view&id=<?=$_SESSION['uid']?>" class="nav-link">
               <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 Events
@@ -106,19 +106,9 @@ if (!isset($_SESSION['uid'])) {
             </a>
           </li>
 
-          <!-- Nav Item 2 -->
-          <li class="nav-item ">
-            <a href="index.php?action=category-view" class="nav-link">
-              <i class="nav-icon fas fa-tags"></i>
-              <p>
-                Category
-              </p>
-            </a>
-          </li>
-
           <!-- Nav Item 4 -->
           <li class="nav-item ">
-            <a href="index.php?action=org-view" class="nav-link">
+            <a href="index.php?action=org-org-view&id=<?=$_SESSION['uid']?>" class="nav-link">
               <i class="nav-icon fas fa-store"></i>
               <p>
                 Organizations
@@ -128,10 +118,10 @@ if (!isset($_SESSION['uid'])) {
 
            <!-- Nav Item 5 -->
            <li class="nav-item ">
-            <a href="index.php?action=user-view" class="nav-link">
+            <a href="index.php?action=org-user-view" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
-                Users
+                Volunteers
               </p>
             </a>
           </li>
